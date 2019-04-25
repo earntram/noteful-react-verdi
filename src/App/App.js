@@ -16,10 +16,11 @@ class App extends Component {
     notes: [],
     folders: [],
     error: null,
+    notefulApi: new NotefulApi()
   };
 
   async componentDidMount() {
-    const notefulApi = new NotefulApi();
+    const {notefulApi} = this.state;
 
     try {
       const folders = await notefulApi.getFolders()
@@ -36,7 +37,7 @@ class App extends Component {
   }
 
   onDeleteNote = (noteId) => {
-    const notefulApi = new NotefulApi()
+    const {notefulApi} = this.state;
     return notefulApi.deleteNote(noteId)
   }
 
