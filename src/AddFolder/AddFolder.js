@@ -1,30 +1,54 @@
 import React, { Component } from 'react'
 import NotefulForm from '../NotefulForm/NotefulForm'
-import './AddFolder.css'
+import './AddFolder.css';
+import AppContext from '../AppContext';
+import ValidationError from '../ValidationError/ValidationError';
 
 export default class AddFolder extends Component {
+  static contextType = AppContext;
+
   state = {
-    name: '', nameValid: false, validateMsg: {}
+    name: '', nameValid: false, validateMsg: '',
+    formValid: false
   }
 
   handleSubmit = e => {
-    e.preventDefault()
-    console.log(this.state.name)
-    const folder = {
-      name: e.target[0].value
-    }
-    this.validateName(this.state.name)
+    e.preventDefault();
+    fetch('http://localhost:9090/folders', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({name: this.state.name})
+    })
+    .then(res => res.json())
+    .then(folder => {
+      this.props.history.push('/');
+      this.context.addFolder(folder)
+    })
+    .catch(err => {
+      this.context.addError(err.message)
+    })
+  }
+
+  updateName = (name) => {
+    this.setState({name}, () => this.validateName(name))
   }
 
   validateName = name => {
-    const validateMsg = {...this.state.validateMsg};
     let nameValid = true;
+    let validateMsg;
 
     if (name === '') {
-      validateMsg.name = 'Name cannot be blank';
       nameValid = false;
+      validateMsg = 'Name cannot be blank'
     }
-    this.setState({validateMsg, nameValid});
+
+    this.setState({nameValid, validateMsg}, this.validateForm)
+  }
+
+  validateForm = () => {
+    this.setState({
+      formValid: this.state.nameValid
+    })
   }
 
   render() {
@@ -35,16 +59,17 @@ export default class AddFolder extends Component {
           <div className='field'>
             <label htmlFor='folder-name-input'>
               Name
+              < ValidationError isValid={this.state.nameValid} message={this.state.validateMsg} />
             </label>
             <input 
               type='text' 
-              id='folder-name-input' 
-              value={this.state.name} 
-              onChange={e => this.setState({name: e.target.value})}
+              id='folder-name-input'
+              defaultValue=''
+              onChange={e => this.updateName(e.target.value)}
             />
           </div>
           <div className='buttons'>
-            <button type='submit'>
+            <button type='submit' disabled={!this.state.formValid}>
               Add folder
             </button>
           </div>

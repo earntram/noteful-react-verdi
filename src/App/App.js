@@ -46,6 +46,16 @@ class App extends Component {
     })
   }
 
+  addFolder = (folder) => {
+    this.setState({
+      folders: [...this.state.folders, folder]
+    })
+  }
+
+  addError = (error) => {
+    this.setState({error})
+  }
+
   renderNavRoutes() {
     return (
       <>
@@ -78,7 +88,8 @@ class App extends Component {
         folders: this.state.folders,
         notes: this.state.notes,
         onDeleteNote: this.onDeleteNote,
-        updateNoteState: this.updateNoteState
+        updateNoteState: this.updateNoteState,
+        addFolder: this.addFolder
       }}>
         <div className='App'>
           <nav className='App__nav'>
