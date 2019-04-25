@@ -11,12 +11,6 @@ export default function NavCircleButton(props) {
     },
     children
   )
-
-  // return (
-  //   <element className={['NavCircleButton', props.className].join(' ')} {...otherProps}>
-  //     {children}
-  //   </element>
-  // )
 }
 
 NavCircleButton.defaultProps = {
