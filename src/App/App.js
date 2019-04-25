@@ -33,23 +33,6 @@ class App extends Component {
     } catch(err) {
       this.setState({error: err.message})
     }
-
-    // Promise.all([getFolders, getNotes])
-    //   .then(resArr => {
-    //     return Promise.all(resArr.map(res => {
-    //       if (!res.ok) throw new Error("Something went horribly wrong :(")
-    //       return res.json()
-    //     }))
-    //   })
-    //   .then(data => {
-    //     console.log(data);
-    //     this.setState({
-    //       folders: data[0],
-    //       notes: data[1],
-    //       error: null
-    //     })
-    //   })
-    //   .catch(err => this.setState({error: err.message}))
   }
 
   onDeleteNote = (noteId) => {
