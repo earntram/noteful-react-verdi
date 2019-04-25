@@ -11,7 +11,7 @@ export default class AddNote extends Component {
   state = {
     name: '', nameValid: false,
     content: '', contentValid: false,
-    folderId: this.setFolderId(), folderIdValid: false,
+    folderId: this.setFolderId(), folderIdValid: this.setFolderId() ? true : false,
     error: null,
     validateMsg: {},
     validForm: false
@@ -37,7 +37,6 @@ export default class AddNote extends Component {
     } catch(err) {
       this.setState({error: err.message})
     }
-    
   }
 
   validateForm = () => {

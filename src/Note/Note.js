@@ -7,20 +7,27 @@ import AppContext from '../AppContext'
 
 export default class Note extends React.Component {
   static contextType = AppContext;
+  
+  state = {
+    error: null
+  }
 
-  handleDelete = () => {
-    if (this.props.match.params.noteId) {
-      this.context.onDeleteNote(this.props.id)
-        .then(res => res.json())
-        .then(() => this.props.history.push('/'))
-        .then(() => this.context.updateNoteState(this.props.id))
-    }
-    else {
-      this.context.onDeleteNote(this.props.id)
-      .then(res => res.json())
-      .then(() => this.context.updateNoteState(this.props.id))
+  handleDelete = async () => {
+    try {
+      if (this.props.match.params.noteId) {
+        await this.context.onDeleteNote(this.props.id)
+        this.props.history.push('/')
+        this.context.updateNoteState(this.props.id)
+
+      } else {
+        await this.context.onDeleteNote(this.props.id)
+        this.context.updateNoteState(this.props.id)
+      }
+    } catch(err) {
+      this.setState({error: err.message})
     }
   }
+
   render() {
       return (
       <div className='Note'>

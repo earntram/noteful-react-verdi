@@ -36,8 +36,8 @@ class App extends Component {
   }
 
   onDeleteNote = (noteId) => {
-    const BASEURL = "http://localhost:9090";
-    return fetch(BASEURL+`/notes/${noteId}`, {method: "DELETE"})
+    const notefulApi = new NotefulApi()
+    return notefulApi.deleteNote(noteId)
   }
 
   updateNoteState = (noteId) => {

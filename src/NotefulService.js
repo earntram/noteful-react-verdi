@@ -5,20 +5,22 @@ export default class NotefulApi {
   }
 
   async getFolders(){
-    try {
-      const res = await fetch(`${this.baseUrl}/folders`)
-      return res.json();
-    } catch(err) {
+    const res = await fetch(`${this.baseUrl}/folders`)
+    
+    if (!res.ok) {
       throw new Error(this.serverErrorMsg)
+    } else {
+      return res.json()
     }
   }
 
   async getNotes(){
-    try {
-      const res = await fetch(`${this.baseUrl}/notes`)
-      return res.json();
-    } catch(err) {
+    const res = await fetch(`${this.baseUrl}/notes`)
+
+    if (!res.ok) {
       throw new Error(this.serverErrorMsg)
+    } else {
+      return res.json()
     }
   }
 
@@ -44,7 +46,17 @@ export default class NotefulApi {
     })
 
     if (!res.ok) {
-      throw new Error('An error occurred while contacting the Noteful service')
+      throw new Error(this.serverErrorMsg)
+    } else {
+      return res.json()
+    }
+  }
+
+  async deleteNote(noteId){
+    const res =  await fetch(`${this.baseUrl}/notes/${noteId}`, {method: 'DELETE'})
+
+    if (!res.ok) {
+      throw new Error(this.serverErrorMsg)
     } else {
       return res.json()
     }
