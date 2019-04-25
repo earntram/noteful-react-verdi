@@ -3,30 +3,29 @@ import NotefulForm from '../NotefulForm/NotefulForm'
 import './AddFolder.css';
 import AppContext from '../AppContext';
 import ValidationError from '../ValidationError/ValidationError';
+import NotefulApi from '../NotefulService';
 
 export default class AddFolder extends Component {
   static contextType = AppContext;
 
   state = {
     name: '', nameValid: false, validateMsg: '',
-    formValid: false
+    formValid: false,
+    error: null
   }
 
-  handleSubmit = e => {
+  handleSubmit = async e => {
     e.preventDefault();
-    fetch('http://localhost:9090/folders', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({name: this.state.name})
-    })
-    .then(res => res.json())
-    .then(folder => {
+    const folder = {name: this.state.name}
+    
+    try {
+      const newFolder = await new NotefulApi().addFolder(folder)
       this.props.history.push('/');
-      this.context.addFolder(folder)
-    })
-    .catch(err => {
-      this.context.addError(err.message)
-    })
+      this.context.addFolder(newFolder)
+      this.setState({error: null})
+    } catch(err) {
+      this.setState({error: err.message})
+    }
   }
 
   updateName = (name) => {
@@ -55,6 +54,7 @@ export default class AddFolder extends Component {
     return (
       <section className='AddFolder'>
         <h2>Create a folder</h2>
+        <div className='error-message' style={this.state.error ? {display: 'block'} : {display: 'none'} }>{this.state.error}</div>
         <NotefulForm onSubmit={e => this.handleSubmit(e)}>
           <div className='field'>
             <label htmlFor='folder-name-input'>
