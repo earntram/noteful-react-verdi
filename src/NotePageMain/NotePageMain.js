@@ -15,7 +15,7 @@ export default class NotePageMain extends React.Component {
       <section className='NotePageMain'>
         <Note
           match={this.props.match}
-          history={this.props.history} //temp
+          history={this.props.history}
           id={note.id}
           name={note.name}
           modified={note.modified}
