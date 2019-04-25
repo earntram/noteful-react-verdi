@@ -7,13 +7,16 @@ import {
 import { BrowserRouter } from 'react-router-dom'
 import 'typeface-roboto'
 import './index.css'
-import App from './App/App'
+import App from './App/App';
+import ErrorPage from './ErrorPage/ErrorPage';
 
 library.add(faPlus, faChevronLeft, faTrashAlt, faCheckDouble)
 
 ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
+  <ErrorPage>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </ErrorPage>,
   document.getElementById('root')
 )
