@@ -6,12 +6,24 @@ export default class NotefulApi {
   async addFolder(folder){
     const res = await fetch(`${this.baseUrl}/folders`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(folder)
     })
     
+    if (!res.ok) {
+      throw new Error('An error occurred while contacting the Noteful service')
+    } else {
+      return res.json()
+    }
+  }
+
+  async addNote(note){
+    const res = await fetch(`${this.baseUrl}/notes`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(note)
+    })
+
     if (!res.ok) {
       throw new Error('An error occurred while contacting the Noteful service')
     } else {

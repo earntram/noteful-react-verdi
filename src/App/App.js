@@ -52,8 +52,10 @@ class App extends Component {
     })
   }
 
-  addError = (error) => {
-    this.setState({error})
+  addNote = (note) => {
+    this.setState({
+      notes: [...this.state.notes, note]
+    })
   }
 
   renderNavRoutes() {
@@ -89,7 +91,8 @@ class App extends Component {
         notes: this.state.notes,
         onDeleteNote: this.onDeleteNote,
         updateNoteState: this.updateNoteState,
-        addFolder: this.addFolder
+        addFolder: this.addFolder,
+        addNote: this.addNote
       }}>
         <div className='App'>
           <nav className='App__nav'>

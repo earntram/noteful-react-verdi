@@ -6,7 +6,7 @@ const AppContext = React.createContext({
   onDeleteNote: () => {},
   updateNoteState: () => {},
   addFolder: () => {},
-  addError: () => {}
+  addNote: () => {}
 });
 
 export default AppContext;
