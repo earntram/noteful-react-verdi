@@ -11,10 +11,17 @@ export default class AddNote extends Component {
   state = {
     name: '', nameValid: false,
     content: '', contentValid: false,
-    folderId: '', folderIdValid: false,
+    folderId: this.setFolderId(), folderIdValid: false,
     error: null,
     validateMsg: {},
     validForm: false
+  }
+
+  setFolderId(){
+    if (this.props.location.search !== '') {
+      return this.props.location.search.split('=')[1]
+    } 
+    return ''
   }
 
   handleSubmit = async (e) => {
@@ -25,7 +32,7 @@ export default class AddNote extends Component {
     try {
       const newNote = await new NotefulApi().addNote(note);
       this.setState({error: null});
-      this.props.history.push('/');
+      this.props.history.goBack();
       this.context.addNote(newNote);
     } catch(err) {
       this.setState({error: err.message})

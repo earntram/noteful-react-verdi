@@ -31,7 +31,7 @@ export default class NoteListMain extends React.Component {
         <div className='NoteListMain__button-container'>
           <CircleButton
             tag={Link}
-            to='/add-note'
+            to={this.props.match.params.folderId ? `/add-note?folderId=${this.props.match.params.folderId}` : '/add-note'}
             type='button'
             className='NoteListMain__add-note-button'
           >
