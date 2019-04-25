@@ -8,7 +8,8 @@ import NotePageMain from '../NotePageMain/NotePageMain';
 import AddFolder from '../AddFolder/AddFolder';
 import AddNote from '../AddNote/AddNote';
 import AppContext from '../AppContext';
-import './App.css'
+import './App.css';
+import NotefulApi from '../NotefulService';
 
 class App extends Component {
   state = {
@@ -18,12 +19,11 @@ class App extends Component {
   };
 
   async componentDidMount() {
-    const BASEURL = "http://localhost:9090";
-    const [folderRes, notesRes] = [await fetch(BASEURL+'/folders'), await fetch(BASEURL+'/notes')]
+    const notefulApi = new NotefulApi();
 
     try {
-      const folders = await folderRes.json()
-      const notes = await notesRes.json()
+      const folders = await notefulApi.getFolders()
+      const notes = await notefulApi.getNotes()  
       
       this.setState({
         folders,

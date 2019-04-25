@@ -1,6 +1,25 @@
 export default class NotefulApi {
   constructor(){
     this.baseUrl = 'http://localhost:9090'
+    this.serverErrorMsg = 'An error occurred while contacting the Noteful service'
+  }
+
+  async getFolders(){
+    try {
+      const res = await fetch(`${this.baseUrl}/folders`)
+      return res.json();
+    } catch(err) {
+      throw new Error(this.serverErrorMsg)
+    }
+  }
+
+  async getNotes(){
+    try {
+      const res = await fetch(`${this.baseUrl}/notes`)
+      return res.json();
+    } catch(err) {
+      throw new Error(this.serverErrorMsg)
+    }
   }
 
   async addFolder(folder){
@@ -11,7 +30,7 @@ export default class NotefulApi {
     })
     
     if (!res.ok) {
-      throw new Error('An error occurred while contacting the Noteful service')
+      throw new Error(this.serverErrorMsg)
     } else {
       return res.json()
     }
