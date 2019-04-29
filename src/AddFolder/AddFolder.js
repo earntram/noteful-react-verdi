@@ -20,9 +20,9 @@ export default class AddFolder extends Component {
     
     try {
       const newFolder = await new NotefulApi().addFolder(folder)
+      this.setState({error: null})
       this.props.history.push('/');
       this.context.addFolder(newFolder)
-      this.setState({error: null})
     } catch(err) {
       this.setState({error: err.message})
     }
