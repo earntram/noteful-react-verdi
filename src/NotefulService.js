@@ -1,6 +1,6 @@
 export default class NotefulApi {
   constructor(){
-    this.baseUrl = 'http://localhost:9090'
+    this.baseUrl = 'http://localhost:8000/api'
     this.serverErrorMsg = 'An error occurred while contacting the Noteful service'
   }
 
@@ -53,12 +53,16 @@ export default class NotefulApi {
   }
 
   async deleteNote(noteId){
-    const res =  await fetch(`${this.baseUrl}/notes/${noteId}`, {method: 'DELETE'})
+    const res =  await fetch(`${this.baseUrl}/notes/${noteId}`, {
+      method: 'DELETE',
+      headers: {'Content-Type': 'application/json'}
+    })
 
     if (!res.ok) {
       throw new Error(this.serverErrorMsg)
     } else {
-      return res.json()
+      // return res.json();
+      return
     }
   }
 }

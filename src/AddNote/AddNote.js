@@ -11,7 +11,7 @@ export default class AddNote extends Component {
   state = {
     name: '', nameValid: false,
     content: '', contentValid: false,
-    folderId: this.setFolderId(), folderIdValid: this.setFolderId() ? true : false,
+    folder_id: this.setFolderId(), folderIdValid: this.setFolderId() ? true : false,
     error: null,
     validateMsg: {},
     validForm: false
@@ -26,8 +26,8 @@ export default class AddNote extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    const {name, content, folderId} = this.state
-    const note = {name, content, folderId, modified: new Date()}
+    const {name, content, folder_id} = this.state
+    const note = {name, content, folder_id, modified: new Date()}
     
     try {
       const newNote = await new NotefulApi().addNote(note);
@@ -80,16 +80,16 @@ export default class AddNote extends Component {
     this.setState({contentValid, validateMsg}, this.validateForm)
   }
 
-  updateFolderId = (folderId) => {
-    this.setState({folderId}, this.validateFolderId(folderId))
+  updateFolderId = (folder_id) => {
+    this.setState({folder_id}, this.validateFolderId(folder_id))
   }
 
-  validateFolderId = (folderId) => {
+  validateFolderId = (folder_id) => {
     let folderIdValid = true;
     let validateMsg = {...this.state.validateMsg};
     const {folders} = this.context
 
-    const folder = folders.find(folder => folder.id === folderId)
+    const folder = folders.find(folder => folder.id === Number(folder_id))
     if (!folder) {
       folderIdValid = false;
       validateMsg.folderId = 'Must choose a folder from the dropdown list';
@@ -127,7 +127,7 @@ export default class AddNote extends Component {
               Folder
               < ValidationError isValid={this.state.folderIdValid} message={this.state.validateMsg.folderId}/>
             </label>
-            <select id='note-folder-select' value={this.state.folderId} onChange={(e) => this.updateFolderId(e.target.value)}>
+            <select id='note-folder-select' value={this.state.folder_id} onChange={(e) => this.updateFolderId(e.target.value)}>
               <option value={null}>...</option>
               {folders.map(folder =>
                 <option key={folder.id} value={folder.id}>

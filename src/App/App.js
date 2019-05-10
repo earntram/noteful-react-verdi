@@ -42,8 +42,9 @@ class App extends Component {
   }
 
   updateNoteState = (noteId) => {
+    console.log('note id: ', noteId)
     this.setState({
-      notes: this.state.notes.filter(note => note.id !== noteId)
+      notes: this.state.notes.filter(note => note.id !== Number(noteId))
     })
   }
 
