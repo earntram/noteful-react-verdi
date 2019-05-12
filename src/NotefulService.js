@@ -1,6 +1,6 @@
 export default class NotefulApi {
   constructor(){
-    this.baseUrl = process.env.NOTEFUL_PROD_API_URL || 'http://localhost:8000/api'
+    this.baseUrl = process.env.REACT_APP_NOTEFUL_PROD_API_URL || 'http://localhost:8000/api'
     this.serverErrorMsg = 'An error occurred while contacting the Noteful service'
   }
 

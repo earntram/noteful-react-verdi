@@ -11,8 +11,5 @@
         "src": ".*",
         "dest": "/index.html"
       }
-  ],
-  "env" : {
-    "NOTEFUL_PROD_API_URL": "https://noteful-api-verdi.herokuapp.com/api"
-  }
+  ]
 }
