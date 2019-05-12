@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "name": "noteful-react-verdi",
+  "alias": "noteful-react-verdi",
+  "routes": [
+      {
+        "src": "^/static/(.*)",
+        "dest": "/static/$1"
+      },
+      {
+        "src": ".*",
+        "dest": "/index.html"
+      }
+  ]
+}
